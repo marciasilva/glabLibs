@@ -24,7 +24,13 @@ public class CodonCount {
 				this.countDNA.put(codon,this.countDNA.get(codon)+1);
 			}
 			}
-		}	
+		}
+		int count = 0;
+		for(String s : this.countDNA.keySet()){
+			count += this.countDNA.get(s);
+			System.out.println(s + " " + this.countDNA.get(s));
+		}
+		System.out.println("total " + count);
 	}
 	
 	String getMostCommonCodon(){
@@ -54,17 +60,22 @@ public class CodonCount {
 		
 		FileResource fr = new FileResource();
 		String contents = fr.asString();
-		//String contents = "CGTTCAAGTTCAA";
 		
 		CodonCount cc = new CodonCount();
 
 //		cc.buildCodonMap(0, contents);
-//		cc.printCodonCounts(1, 5);
+//		System.out.println("-------");
+//		cc.countDNA.clear();
+//
+		cc.buildCodonMap(1, contents);
+		System.out.println("------- " + cc.countDNA.size());
+		
+		
+//		cc.countDNA.clear();
+//		cc.buildCodonMap(2, contents);		
 		
 		cc.countDNA.clear();
 		
-			cc.buildCodonMap(1, contents);
-			cc.printCodonCounts(1, 5);
 
 	}
 

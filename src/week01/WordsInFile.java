@@ -50,5 +50,41 @@ public class WordsInFile {
 		}
 		return max;
 	}
+	
+	ArrayList<String> wordsInNumFiles(Integer number){
+		ArrayList<String> words = new ArrayList<String>();
+		for(String key : this.mapFiles.keySet()){
+			if(this.mapFiles.get(key).size() == number){
+				words.add(key);
+			}
+		}
+		return words;
+		
+	}
+	
+	void printFilesIn(String word){
+		ArrayList<String> t = this.mapFiles.get(word);
+		for (String s : t) {
+		    System.out.println(s);
+		} 
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		WordsInFile wf = new WordsInFile();
+		wf.buildWordFileMap();
+//		ArrayList<String> wordsInAllFiles = wf.wordsInNumFiles(5);
+		ArrayList<String> wordsInFourFiles = wf.wordsInNumFiles(7);
+//		
+//		System.out.println("Count words in 5 files" + wordsInAllFiles.size());
+		System.out.println("Count words in 7 files" + wordsInFourFiles.size());
+//		
+//		
+//		ArrayList<String> notSea = wf.mapFiles.get("sea");
+//		System.out.println(notSea);
+		
+//		ArrayList<String>  hasTree = wf.mapFiles.get("tree");
+//		System.out.println(hasTree);
+	}
 
 }

@@ -4,19 +4,14 @@ import edu.duke.*;
 import java.util.*;
 
 public class GladLib {
-	private ArrayList<String> adjectiveList;
-	private ArrayList<String> nounList;
-	private ArrayList<String> colorList;
-	private ArrayList<String> countryList;
-	private ArrayList<String> nameList;
-	private ArrayList<String> animalList;
-	private ArrayList<String> timeList;
+	
 	
 	private Random myRandom;
 	
 	//private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
 	private static String dataSourceDirectory = "D:/Personal/GlabLibs/data";
 	private	HashMap<String, ArrayList<String>> mySource = new HashMap<String,ArrayList<String>>();
+	private ArrayList<String> getCategories;
 
 	
 	public GladLib(){
@@ -30,7 +25,7 @@ public class GladLib {
 	}
 	
 	private void initializeFromSource(String source) {
-		String [] labels  = {"adjective", "noun", "color", "country", "name", "animal", "timeframe"};
+		String [] labels  = {"adjective", "animal", "color", "country", "fruit", "name", "noum", "timeframe", "verb"};
 		
 		for (String s : labels){
 			ArrayList <String> list = readIt(source + "/" + s + ".txt");
@@ -44,31 +39,12 @@ public class GladLib {
 	}
 	
 	private String getSubstitute(String label) {
-		if (label.equals("country")) {
-			return randomFrom(countryList);
-		}
-		if (label.equals("color")){
-			return randomFrom(colorList);
-		}
-		if (label.equals("noun")){
-			return randomFrom(nounList);
-		}
-		if (label.equals("name")){
-			return randomFrom(nameList);
-		}
-		if (label.equals("adjective")){
-			return randomFrom(adjectiveList);
-		}
-		if (label.equals("animal")){
-			return randomFrom(animalList);
-		}
-		if (label.equals("timeframe")){
-			return randomFrom(timeList);
-		}
 		if (label.equals("number")){
 			return ""+myRandom.nextInt(50)+5;
 		}
-		return "**UNKNOWN**";
+		else{
+			return randomFrom(this.mySource.get(label));
+		}
 	}
 	
 	private String processWord(String w){
@@ -79,6 +55,7 @@ public class GladLib {
 		}
 		String prefix = w.substring(0,first);
 		String suffix = w.substring(last+1);
+		this.getCategories.add(w.substring(first+1, last));
 		String sub = getSubstitute(w.substring(first+1,last));
 		return prefix+sub+suffix;
 	}
@@ -135,10 +112,30 @@ public class GladLib {
 		printOut(story, 60);
 	}
 	
+	int totalWordsInMap(){
+		int count = 0;
+		
+		for (String s : this.mySource.keySet()) {
+			count += this.mySource.get(s).size();
+		    // process each key in turn 
+		}
+		return count;
+	}
+
+	int totalWordsConsidered(){
+		int count = 0;
+		for(String category : this.getCategories){
+			count += this.mySource.get(category).size();
+		}
+		return count;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GladLib gl = new GladLib();
 		gl.makeStory();
+		System.out.println("Total words in map " + gl.totalWordsInMap());
+		System.out.println("Total words considered " + gl.totalWordsConsidered());
 	}
 
 
