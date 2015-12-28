@@ -106,9 +106,9 @@ public class CountWords {
             words[index] = s;
             index += 1;
         }
-        System.out.println("starting array");
-        for(int k=0; k < RAND_SIZE; k++){
-            String word = getRandomWord(words);
-        }System.out.println("done with randoms");
+//        System.out.println("starting array");
+//        for(int k=0; k < RAND_SIZE; k++){
+//            String word = getRandomWord(words);
+//        }System.out.println("done with randoms");
     }
 }

@@ -14,8 +14,10 @@ public class GladLib {
 	
 	private Random myRandom;
 	
-	private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
-	private static String dataSourceDirectory = "data";
+	//private static String dataSourceURL = "http://dukelearntoprogram.com/course3/data";
+	private static String dataSourceDirectory = "D:/Personal/GlabLibs/data";
+	private	HashMap<String, ArrayList<String>> mySource = new HashMap<String,ArrayList<String>>();
+
 	
 	public GladLib(){
 		initializeFromSource(dataSourceDirectory);
@@ -28,13 +30,12 @@ public class GladLib {
 	}
 	
 	private void initializeFromSource(String source) {
-		adjectiveList= readIt(source+"/adjective.txt");	
-		nounList = readIt(source+"/noun.txt");
-		colorList = readIt(source+"/color.txt");
-		countryList = readIt(source+"/country.txt");
-		nameList = readIt(source+"/name.txt");		
-		animalList = readIt(source+"/animal.txt");
-		timeList = readIt(source+"/timeframe.txt");		
+		String [] labels  = {"adjective", "noun", "color", "country", "name", "animal", "timeframe"};
+		
+		for (String s : labels){
+			ArrayList <String> list = readIt(source + "/" + s + ".txt");
+			mySource.put(s, list);
+		}	
 	}
 	
 	private String randomFrom(ArrayList<String> source){
@@ -130,9 +131,16 @@ public class GladLib {
 	
 	public void makeStory(){
 	    System.out.println("\n");
-		String story = fromTemplate("data/madtemplate.txt");
+		String story = fromTemplate( dataSourceDirectory + "madtemplate.txt");
 		printOut(story, 60);
 	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		GladLib gl = new GladLib();
+		gl.makeStory();
+	}
+
 
 }
 

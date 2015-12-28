@@ -33,6 +33,7 @@ public class WordFrequenciesMap {
 	
 	public void countWordsMap(String filename){
 		FileResource fr = new FileResource(filename);
+		//String type of key, integer type of value
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 
 		for(String w : fr.words()){
