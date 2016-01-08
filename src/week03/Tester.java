@@ -13,38 +13,31 @@ public class Tester
     
     public void testLogAnalyzer() {
     	LogAnalyzer la = new LogAnalyzer();
-    	la.readFile("D:/Personal/GlabLibs/testFiles/weblog3-short_log.txt");
+    	la.readFile("D:/Personal/GlabLibs/testFiles/weblog2_log.txt");
+    	
+    	System.out.println("Unique Ips " + la.countUniqueIPs());
+    	
+    	System.out.println("Unique Ips visited in sep 27: " + la.uniqueIPVisitsOnDay("set 27").size());
+    	
+    	System.out.println("Ips in Range " + la.countUniqueIPsInRange(200, 299));
     	
     	
-    	HashMap<String, Integer> visitsPerIp = la.countVisitsPerIP();
-    	System.out.println("Visits per Ip");
-    	System.out.println(visitsPerIp);
-    	
+    	HashMap<String, Integer> visitsPerIp = la.countVisitsPerIP();  	
     	System.out.println("Most number visits by Ip " + la.mostNumberVisitsByIP(visitsPerIp));
     	
     	System.out.println("Ips Most visited");
     	ArrayList<String> mostVisIps = la.IPsMostVisits(visitsPerIp);
     	System.out.println(mostVisIps);
     	
-    	System.out.println("Ips for day");
-    	HashMap<String, ArrayList<String>>  ipsForDay = la.iPsForDays();
-    	System.out.println(ipsForDay);
-    	
+
+    	HashMap<String, ArrayList<String>>  ipsForDay = la.iPsForDays();  	
     	System.out.println("Day with most visits " + la.dayWithMostIPVisits(ipsForDay));
     	
-    	System.out.println("Ips with most visits on Sep 30");
-    	ArrayList<String> list = la.iPsWithMostVisitsOnDay(ipsForDay, "set 30");
+       	System.out.println("Ips with most visits on Sep 30");
+    	ArrayList<String> list = la.iPsWithMostVisitsOnDay(ipsForDay, "set 29");
     	System.out.println(list);
     	
-//    	la.printAll();
-//    	la.printUniqIPs();
-//    	la.printAllHigherThanNum(200);
-    	
-//    	ArrayList<LogEntry> visitDay = la.uniqueIPVisitsOnDay("Sep 30");
-//    	for(LogEntry le : visitDay)
-//    		System.out.println(le);
-//    	
-//    	System.out.println("UniqueIPsinRange " + la.countUniqueIPsInRange(300,399));
+
     }
     
     public static void main(String args[]){

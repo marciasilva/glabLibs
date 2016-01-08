@@ -36,21 +36,22 @@ public class LogAnalyzer
      	 return uniqueIPs;
      }
        
-    private int countUniqueIPs(){
+    public int countUniqueIPs(){
     	ArrayList<String> uniqueIPs = uniqueIPs();
     	return uniqueIPs.size();
     }
     
     
-    public ArrayList<LogEntry> uniqueIPVisitsOnDay(String someday){
-    	ArrayList<LogEntry> answer = new ArrayList<LogEntry>();
-    	ArrayList<String> uniqueIPs = uniqueIPs();
+    public ArrayList<String> uniqueIPVisitsOnDay(String someday){
+    	ArrayList<String> answer = new ArrayList<String>();
     	for(LogEntry le : records){
-       		String strDate = le.getAccessTime().toString();
-    		String ipAddress = le.getIpAddress();
-    		if( strDate.contains(someday)  && !uniqueIPs.contains(ipAddress)){
-    			answer.add(le);
-    		}
+       		String strDate =  new SimpleDateFormat("MMM dd").format( le.getAccessTime());
+       		if(strDate.equals(someday)){
+       			String ipAddress = le.getIpAddress();
+       			if(!answer.contains(ipAddress)){
+       				answer.add(ipAddress);
+       			}
+       		}
     	}
     	return answer;
     }
@@ -60,7 +61,7 @@ public class LogAnalyzer
     	int count = 0;
     	ArrayList<String> uniqueIPs = new ArrayList<String>();
     	for(LogEntry le : records){
-    		if(le.getStatusCode() > low && le.getStatusCode() < high){
+    		if(le.getStatusCode() >= low && le.getStatusCode() <= high){
     			if(!uniqueIPs.contains(le.getIpAddress())){
     				uniqueIPs.add(le.getIpAddress());
     				count++;
