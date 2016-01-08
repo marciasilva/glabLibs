@@ -116,7 +116,7 @@ public class LogAnalyzer
     	 HashMap<String, ArrayList<String>> answer = new HashMap<String, ArrayList<String>>();
 
     	 for(LogEntry le : this.records){
-    		 String date =  new SimpleDateFormat("MMM DD").format( le.getAccessTime());
+    		 String date =  new SimpleDateFormat("MMM dd").format( le.getAccessTime());
     		 String ip = le.getIpAddress();
     		 
     		if(!answer.containsKey(date)){
@@ -157,15 +157,22 @@ public class LogAnalyzer
      
      //returns a list of IP addresses that had the most accesses on the given day.
      public ArrayList<String> iPsWithMostVisitsOnDay(HashMap<String, ArrayList<String>> myMap, String date){
-    	 ArrayList<String> answer = new ArrayList<String>();
-    	 
-    	 for(String key : myMap.keySet()){
-    		 if(key.equals(date)){
-    			 
-    		 }
-    	 }
-    	 
-    	 return answer;
+    	HashMap<String, Integer> visits = new HashMap<String, Integer>();
+    
+    	ArrayList<String> ips = myMap.get(date);
+       	try{
+    	for(String ip : ips){
+    	    if(visits.containsKey(ip)){
+    	    	visits.put(ip, visits.get(ip) + 1);
+    	    }
+    	    else{
+    	    	visits.put(ip, 1);
+    	    }
+    	}
+    	}catch(Exception e){
+    		System.out.println("Erro ao usar chave " + date);
+    	}
+    	return IPsMostVisits(visits);
      }
      
      
