@@ -5,18 +5,32 @@ import edu.duke.*;
 
 public class VigenereBreaker {
     public String sliceString(String message, int whichSlice, int totalSlices) {
-        //REPLACE WITH YOUR CODE
-        return "WRITE ME!";
+    	//use string builder 
+        StringBuilder answer = new StringBuilder();
+    	for (int i = whichSlice; i < message.length(); i += totalSlices){
+    		char charSlice = message.charAt(i);
+    		answer.append(charSlice);
+    	}
+    	
+        return answer.toString();
     }
 
     public int[] tryKeyLength(String encrypted, int klength, char mostCommon) {
         int[] key = new int[klength];
-        //WRITE YOUR CODE HERE
+        
+        CaesarCracker cc = new CaesarCracker(mostCommon);
+        for(int i = 0; i < klength; i++){
+        	key[i] = cc.getKey(sliceString(encrypted,i,klength));
+        }
         return key;
     }
 
     public void breakVigenere () {
-        //WRITE YOUR CODE HERE
+    	FileResource fr = new FileResource();
+    	String message = fr.asString();
+    	int keys [] = tryKeyLength(message, 6, 'e');
+    	VigenereCipher vc = new VigenereCipher(keys);
+    	System.out.println(vc.decrypt(message));
     }
     
 }
