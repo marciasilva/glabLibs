@@ -24,13 +24,54 @@ public class VigenereBreaker {
         }
         return key;
     }
-
+    
+    
+    public HashSet<String> readDictionary(FileResource fr){
+    	HashSet<String> myDict = new HashSet<String>();
+    	for(String line : fr.lines()){
+    		myDict.add(line.toLowerCase());
+    	}
+    	return myDict;
+    }
+    
+    public int countWords(String message, HashSet<String> dictionary){
+    	int numberW = 0;
+    	for(String word : message.split("\\W")){
+    		if(dictionary.contains(word.toLowerCase())) numberW ++;
+    	}
+    	
+    	return numberW;
+    }
+   
+    public void breakForLanguage(String encrypted, HashSet<String> dictionary){
+    	int maxRealW = 0;
+    	String realDecrypted = new String();
+    	for (int i = 1; i <= 100; i++){
+    		int keys [] = tryKeyLength(encrypted, i, 'e');
+        	VigenereCipher vc = new VigenereCipher(keys);
+        	String decrypted = vc.decrypt(encrypted);
+        	int numRealW = countWords(decrypted, dictionary);
+        	if(maxRealW < numRealW){
+        		maxRealW = numRealW;
+        		realDecrypted =  decrypted;
+        	}	
+    	}
+    	System.out.println("Decrypted message \n" + realDecrypted);	
+    	System.out.println("\nTotal valid words " + maxRealW);	
+    }
+    
     public void breakVigenere () {
     	FileResource fr = new FileResource();
     	String message = fr.asString();
-    	int keys [] = tryKeyLength(message, 6, 'e');
-    	VigenereCipher vc = new VigenereCipher(keys);
-    	System.out.println(vc.decrypt(message));
+    	
+    	FileResource dictFile = new FileResource();
+    	HashSet <String> dictionary = readDictionary(dictFile);
+    	
+    	breakForLanguage(message, dictionary);
+    	
+    	//int keys [] = tryKeyLength(message, 4, 'e'); known key
+    	//VigenereCipher vc = new VigenereCipher(keys);
+    	//System.out.println(vc.decrypt(message));
     }
     
 }
